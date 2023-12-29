@@ -13,13 +13,6 @@ CREATE TABLE users (
     role ENUM('user', 'artist', 'admin') NOT NULL
 );
 
-CREATE TABLE artists (
-    artist_id INT PRIMARY KEY AUTO_INCREMENT,
-    user_id INT UNIQUE,
-    bio TEXT,
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
-);
-
 CREATE TABLE artworks (
     artwork_id INT PRIMARY KEY AUTO_INCREMENT,
     artist_id INT,
