@@ -1,5 +1,7 @@
 
 
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -68,6 +70,10 @@
             color: #24292e;
         }
 
+        .id1{
+            float:right;
+        }
+
         main {
             padding: 20px;
         }
@@ -76,8 +82,12 @@
         include "register.php";
         include "login.php";
         session_start();
-
+        
         global $conn;
+
+        // echo var_dump($_SESSION);
+
+
     ?>
 </head>
 <body>
@@ -89,8 +99,13 @@
     </header>
 
     <nav>
+
     <div class="top-bar">
             <div class="user-info">
+                <?php if($_SESSION['username'] =="Guest"){
+                    $_SESSION['firstname'] = "Guest";
+                }
+                ?>
             <p>Welcome <?php echo $_SESSION["firstname"]; ?></p>
                 <a href="logout.php">Logout</a>
             </div>
@@ -99,6 +114,7 @@
         <a href="contact.html">Contact</a>
 
         <?php
+        if ($_SESSION['username'] != "Guest"){
         $username = $conn->real_escape_string($_SESSION['username']);
         $query = "SELECT user_id FROM users WHERE username = '$username'";
         $artistIDResult = $conn->query($query);
@@ -111,7 +127,11 @@
                 echo "<a href=create_artwork.php>Create Me ;)</a>";
                 echo "<a href=profile.php?id=$artistID>Profile</a>";
             }
-        
+            else{
+                echo "<a href='profile.php?id={$_SESSION['user_id']}'>Profile</a>";
+
+            }
+        }
     
         
         ?>
@@ -119,10 +139,46 @@
 
     <main>
         
+            <?php
+            $queryArtworks = "SELECT * FROM artworks";
+            $getAllArtworks = $conn->query($queryArtworks);
+
             
+            if ($getAllArtworks->num_rows > 0) {
+                while ($artwork = $getAllArtworks->fetch_assoc()) {
+                    $artworkID = $artwork['artwork_id'];
+                    $artistID = $artwork['artist_id'];
+                    $title = $artwork['title'];
+                    $description = $artwork['description'];
+                    $imageUrl = $artwork['image_url'];
+                    $creationDate = $artwork['creation_date'];
+                    $technique = $artwork['technique'];
+                    $cost = $artwork['cost'];
+                    $onSale = $artwork['on_sale'];
+                    $dimensions = $artwork['dimensions'];
+                    
+                    $queryArtistUsername = "SELECT username FROM users WHERE user_id = $artistID";
+                    $getArtistUsername = $conn->query($queryArtistUsername);
+                    $artistUsername = $getArtistUsername->fetch_assoc()['username'];
 
+                    echo "Artist: $artistUsername<br>";
+                    echo "Title: $title<br>";
 
+                    echo "<a href='inspect_picture.php?id=$artistID-$artworkID'><img src='$imageUrl' alt='Artwork Image' style='max-width: 300px; max-height: 300px;'></a><br>";
+                    echo "Description: $description<br>";
+                    
+                }
+} else {
+    echo "No artworks found.";
+}
 
+            ?>
+        
+        
+        
+        
+        
     </main>
 </body>
 </html>
+        

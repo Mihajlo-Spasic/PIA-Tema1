@@ -17,16 +17,16 @@
             text-align: center;
         }
 
-        .login-form, .register-form {
+        .login-form, .register-form, .guest-form {
             max-width: 400px;
             margin: auto;
             padding: 20px;
             border: 1px solid #ccc;
             border-radius: 8px;
-            display: none; /* Hide both forms initially */
+            display: none; /* Hide all forms initially */
         }
 
-        .login-form.active, .register-form.active {
+        .login-form.active, .register-form.active, .guest-form.active {
             display: block; /* Show the active form */
         }
     </style>
@@ -36,6 +36,7 @@
         <div>
             <button onclick="showForm('login')">Login</button>
             <button onclick="showForm('register')">Register</button>
+            <button onclick="showForm('guest')">Guest</button>
         </div>
         
         <form action="login.php" method="post" class="login-form active">
@@ -50,7 +51,7 @@
         </form>
 
         <form action="register.php" method="post" class="register-form">
-            <label for="username">Username:</label>
+        <label for="username">Username:</label>
             <input type="text" id="username" name="username" required><br>
 
             <label for="name">Ime:</label>
@@ -71,19 +72,29 @@
             <input type="submit" value="Register">
             <input type="reset" value="Reset">
         </form>
+
+        <form action="guest.php" method="post" class="guest-form">
+            <!-- Guest form content -->
+            <input type="submit" value="Enter as Guest">
+        </form>
     </div>
 
     <script>
         function showForm(formType) {
             const loginForm = document.querySelector('.login-form');
             const registerForm = document.querySelector('.register-form');
+            const guestForm = document.querySelector('.guest-form');
+
+            loginForm.classList.remove('active');
+            registerForm.classList.remove('active');
+            guestForm.classList.remove('active');
 
             if (formType === 'login') {
                 loginForm.classList.add('active');
-                registerForm.classList.remove('active');
             } else if (formType === 'register') {
-                loginForm.classList.remove('active');
                 registerForm.classList.add('active');
+            } else if (formType === 'guest') {
+                guestForm.classList.add('active');
             }
         }
     </script>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hihi create artwork hehe</title>
+    <title>Hihi create artwork hehe </title>
 </head>
 <body>
 
@@ -19,19 +19,25 @@ session_start();
 $db = "PIAproject";
 $table = "users";
 $conn = new mysqli("localhost","spale","Spale666","PIAproject") or exit("affaf");
-
+// promeni sa svojom databazom
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Handle form submission
-    $uploadDir = 'uploads/';
-    $uploadFile = $uploadDir . basename($_FILES['photo']['name']);
+   
 
-    // Move the uploaded file to the specified directory
+    global $conn;
+
+    $username = $conn->real_escape_string($_SESSION['username']);
+    $uploadDir = 'uploads/';
+    $artistIDResult = $conn->query("SELECT user_id FROM users WHERE username='$username'");
+    $row = $artistIDResult->fetch_assoc();
+    $artistID = $row['user_id'];
+    $uploadFile = $uploadDir . $artistID ."_". basename($_FILES['photo']['name']);
+
+ 
     if (move_uploaded_file($_FILES['photo']['tmp_name'], $uploadFile)) {
-        // Display the uploaded photo
+    
         echo '<img src="' . $uploadFile . '" alt="Uploaded Photo" style="max-width: 300px; max-height: 300px;"><br>';
 
-        // Display additional information
         echo '<strong>Date of Creation:</strong> ' . htmlspecialchars($_POST['creation_date']) . '<br>';
         echo '<strong>Dimensions:</strong> ' . htmlspecialchars($_POST['dimensions']) . '<br>';
         echo '<strong>Technique:</strong> ' . htmlspecialchars($_POST['technique']) . '<br>';
@@ -40,27 +46,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo '<strong>On Sale:</strong> ' . (isset($_POST['on_sale']) ? 'Yes' : 'No') . '<br>';
         echo '<strong>Bio:</strong> ' . htmlspecialchars($_POST['bio']) . '<br>';
         
+        $date = $conn->real_escape_string($_POST['creation_date']);
+        $dateObject = DateTime::createFromFormat('Y-m-d', $date);
+        if (!$dateObject || $dateObject->format('Y-m-d') !== $date) {
+            die("Error: Invalid date format. Please use YYYY-MM-DD.");
+        }
         
+        $cost = filter_var($_POST['cost'], FILTER_VALIDATE_FLOAT);
+        if ($cost === false) {
+            die("Error: Invalid cost value. Please enter a valid numeric value.");
+        }
+
+        $on_sale = isset($_POST['on_sale']) ? 1 : 0; 
         $title = $conn->real_escape_string($_POST['name']);
         $description = $conn->real_escape_string($_POST['bio']);
-        $uploadFile = $uploadDir . basename($_FILES['photo']['name']);
-        $date = $conn->real_escape_string($_POST['creation_date']);
-        $technique = $conn->real_escape_string($_POST['technique']);
-        $cost = $conn->real_escape_string($_POST['cost']);
-        $on_sale = isset($_POST['on_sale']) ? 1 : 0; 
         $dimensions = $conn->real_escape_string($_POST['dimensions']);
-    
-        global $conn;
-        $username = $conn->real_escape_string($_SESSION['username']);
-        echo "username: $username";
-        $artistIDResult = $conn->query("SELECT user_id FROM users WHERE username='$username'");
-        $row = $artistIDResult->fetch_assoc();
-        $artistID = $row['user_id'];
-        echo "artist id: $artistID";
-    
+        $technique = $conn->real_escape_string($_POST['technique']);
+        $uploadFile = $uploadDir . $artistID ."_". basename($_FILES['photo']['name']);
+
         $insertPhoto = "INSERT INTO artworks (artist_id, title, description, image_url, creation_date, technique, cost, on_sale, dimensions) VALUES ('$artistID', '$title', '$description', '$uploadFile', '$date', '$technique', '$cost', '$on_sale', '$dimensions')";
-    
+
         $conn->query($insertPhoto);
+
     } else {
         echo 'Error uploading the file.';
     }
@@ -68,7 +75,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-<!-- Photo Upload Form -->
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
     <label for="photo">Upload Photo:</label>
     <input type="file" name="photo" id="photo" required><br>

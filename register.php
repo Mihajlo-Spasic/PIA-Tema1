@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST["password"];
     $user_type = $_POST["user_type"];
 
- 
+
     $query = "INSERT INTO users (username, firstname, lastname, password, role) VALUES ('$username', '$firstname','$lastname','$password', '$user_type')";
     $result = $conn->query("$query");
 
@@ -43,7 +43,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $_SESSION["username"] = $username;
     $_SESSION["firstname"] = $firstname;
     $_SESSION["user_type"] = $user_type;
-
 
     header("Location: pocetna.php");
     exit();
