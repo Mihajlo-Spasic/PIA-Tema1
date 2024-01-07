@@ -68,6 +68,10 @@
             <label for="user">Korisnik</label>
             <input type="radio" id="artist" name="user_type" value="artist">
             <label for="artist">Umetnik</label><br>
+            <!--Ovde sam dodao za administratora ulogu - Bane -->
+            <input type="radio" id="admin" name="user_type" value="admin">
+            <label for="admin">Administrator</label>
+            <br>
 
             <input type="submit" value="Register">
             <input type="reset" value="Reset">

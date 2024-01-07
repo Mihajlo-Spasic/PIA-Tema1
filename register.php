@@ -6,7 +6,7 @@ ini_set('display_errors', 1);
 
 $db = "PIAproject";
 $table = "users";
-$conn = new mysqli("localhost","spale","Spale666","PIAproject") or exit("affaf");
+$conn = new mysqli("localhost","root","","piaproject") or exit("affaf");
 
 
 
@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user_id = mysqli_insert_id($conn); // Get the last inserted user ID
           
         if ($user_type === "artist") {
-            $query = "INSERT INTO artists (user_id, bio) VALUES ('$user_id', 'Bio information')";
+            $query = "INSERT INTO users (user_id, bio) VALUES ('$user_id', 'Bio information')";
             $conn->query("$query");
             
         }

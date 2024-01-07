@@ -6,7 +6,7 @@ ini_set('display_errors', 1);
 
 $db = "PIAproject";
 $table = "users";
-$conn = new mysqli("localhost","spale","Spale666","PIAproject") or exit("affaf");
+$conn = new mysqli("localhost","root","","piaproject") or exit("affaf");
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     else{
         //User doesn't exist wtf do I do here
-        header("Location: /");
+        header("Location: logout.php");
     }
 
 

@@ -6,6 +6,6 @@ ini_set('display_errors', 1);
 
 $db = "PIAproject";
 $table = "users";
-$connection = new mysqli("localhost","spale","Spale666","users") or exit("affaf");
+$connection = new mysqli("localhost","root","","piaproject") or exit("affaf");
 
 ?>

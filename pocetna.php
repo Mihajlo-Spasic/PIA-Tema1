@@ -74,6 +74,10 @@
             float:right;
         }
 
+        .desno{
+            float:right;
+        }
+
         main {
             padding: 20px;
         }
@@ -113,6 +117,7 @@
         <a href="about.html">About</a>
         <a href="contact.html">Contact</a>
 
+        <div class="desno">
         <?php
         if ($_SESSION['username'] != "Guest"){
         $username = $conn->real_escape_string($_SESSION['username']);
@@ -122,10 +127,13 @@
       
             $row = $artistIDResult->fetch_assoc();
             $artistID = $row['user_id'];
-            // BANE POMERI DUGMICE DESNO PLS
             if ($_SESSION['user_type'] == "artist") {
-                echo "<a href=create_artwork.php>Create Me ;)</a>";
+                echo "<a href=create_artwork.php>Create Artwork</a>";
                 echo "<a href=profile.php?id=$artistID>Profile</a>";
+            //ovde sam dodao za administrator dugmad, konkretno za kontrolni panel i profil  
+            } else if ($_SESSION['user_type'] == "admin") {
+                echo "<a href='profile.php?id={$_SESSION['user_id']}'>Profile</a>";
+                echo "<a href=kontrolnipanel.php alt='Mrzim sebe'>Kontrolni Panel</a>";
             }
             else{
                 echo "<a href='profile.php?id={$_SESSION['user_id']}'>Profile</a>";
@@ -135,6 +143,8 @@
     
         
         ?>
+        </div>
+    </div>
     </nav>
 
     <main>
@@ -166,6 +176,7 @@
 
                     echo "<a href='inspect_picture.php?id=$artistID-$artworkID'><img src='$imageUrl' alt='Artwork Image' style='max-width: 300px; max-height: 300px;'></a><br>";
                     echo "Description: $description<br>";
+                    echo "<br>";
                     
                 }
 } else {

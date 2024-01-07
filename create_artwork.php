@@ -18,7 +18,7 @@ session_start();
 
 $db = "PIAproject";
 $table = "users";
-$conn = new mysqli("localhost","spale","Spale666","PIAproject") or exit("affaf");
+$conn = new mysqli("localhost","root","","piaproject") or exit("affaf");
 // promeni sa svojom databazom
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+</head>
+<body>
+	<header>
+		<?php
+
+		?>
+	</header>
+
+	<main>
+		<?php
+		$queryUsers = "SELECT * FROM users";
+		$getusers = $conn->query($queryUsers);
+
+		if($getusers->num_rows > 0) {
+			while ($korisnik = $getusers->fetch_assoc()) {
+				$userid = $korisnik['user_id'];
+				$juzernejm = $korisnik['username'];
+				echo "Korisnik: $juzernejm<br>";
+
+			}
+		}
+		?>
+	</main>
+
+</body>
+</html>
