@@ -1,10 +1,16 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$db = "piaproject";
 
-$konekcija = new mysqli($servername, $username, $password, $db,/* $PORT, $socket*/ );
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+
+
+$db = "PIAproject";
+$table = "users";
+$konekcija = new mysqli("localhost","spale","Spale666","PIAproject") or exit("affaf");
+
+
 
 $noviid = $_GET['identifikacija'];
 

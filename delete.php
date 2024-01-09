@@ -1,10 +1,12 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$db = "piaproject";
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-$konekcija = new mysqli($servername, $username, $password, $db,/* $PORT, $socket*/ );
+$db = "PIAproject";
+$table = "users";
+$konekcija = new mysqli("localhost","spale","Spale666","PIAproject") or exit("affaf");
+
+
 
 $noviid = $_GET['identifikacija'];
 
@@ -15,7 +17,7 @@ $konekcija->query($sql2);
 
 //ostalo mi je samo jos da izbrisem sve slike 
 
-header('Location: kontrolnipanel.php');
+header("Location: kontrolnipanel.php");
 exit();
 
 ?>

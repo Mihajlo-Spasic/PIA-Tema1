@@ -1,0 +1,22 @@
+<?php
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+$db = "PIAproject";
+$table = "users";
+$konekcija = new mysqli("localhost","spale","Spale666","PIAproject") or exit("affaf");
+
+
+
+$noviid = $_GET['identifikacija2'];
+
+$sql = "DELETE FROM comments WHERE comment_id = $noviid";
+$konekcija->query($sql);
+
+//ostalo mi je samo jos da izbrisem sve slike 
+
+header('Location: kontrolnipanel.php');
+exit();
+
+?>

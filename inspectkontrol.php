@@ -14,7 +14,11 @@ ini_set('display_errors', 1);
 
 session_start();
 
-$conn = new mysqli("localhost","root","","piaproject") or exit("affaf");
+$db = "PIAproject";
+$table = "users";
+$conn = new mysqli("localhost","spale","Spale666","PIAproject") or exit("affaf");
+
+
 
 $picture_id = $_GET['id'];
 
@@ -221,9 +225,15 @@ $result = $conn->query($sql);
                     echo "Username: $commentAuthorUsername<br>";
                     echo "Comment Date: $commentDate<br>";
                     echo "Comment Text: $commentText<br>";
+                    $queryCommentID = "SELECT comment_id FROM comments WHERE artwork_id = $artwork_id";
+                    $commentId = $comment['comment_id'];
+                    echo "<p class='identifikator' hidden>".$commentId."</p>";
+                    echo "<button onclick="."posaljideletekoment(this)".">Izbrisi komentar</button>"; 
+                    
                     echo "<hr>";
+                    
                 }
-        
+                
                 echo '</div>'; 
             } else {
                 echo '<div>No comments found.</div>';
@@ -285,5 +295,28 @@ if ($_SESSION['username'] != "Guest"){
             form.submit();
         }
 </script>
+<script type="text/javascript">
+    function posaljideletekoment(button) {
+            var pozicijadugme = button.parentNode;
+            var identitet = pozicijadugme.querySelector('p.identifikator');
+            var praviidentitet = identitet.textContent;
+
+
+            var form = document.createElement("form");
+            form.method = "get";
+            form.action = "deleteComment.php";
+
+            var input = document.createElement("input");
+            input.type = "hidden";
+            input.name = "identifikacija2";
+            input.value = praviidentitet;
+
+            form.appendChild(input);
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+</script>
+
 </body>
 </html>

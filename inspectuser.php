@@ -14,7 +14,12 @@ ini_set('display_errors', 1);
 
 session_start();
 
-$conn = new mysqli("localhost","root","","piaproject") or exit("affaf");
+
+$db = "PIAproject";
+$table = "users";
+$conn = new mysqli("localhost","spale","Spale666","PIAproject") or exit("affaf");
+
+
 
 $user_id = $_GET['id'];
 $parts = explode("-", $user_id);
