@@ -4,6 +4,19 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Provera korisnika</title>
+	<link rel="stylesheet" href="Style.css">
+	<style type="text/css">
+		button:hover {
+			color: purple;
+			background-color: lavenderblush;
+		}
+		a {
+            color: hotpink;
+            background-color: white;
+            border: 1px solid hotpink;
+            border-radius: 8px;
+        }
+ 	</style>
 </head>
 <body>
 <?php

@@ -1,4 +1,13 @@
-<?php
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <link rel="stylesheet" href="Style.css">
+</head>
+<body>
+    <?php
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -42,13 +51,13 @@ if ($queryResult->num_rows > 0) {
         $description = $artwork['description'];
 
         echo "<a href='inspect_picture.php?id={$artwork['artist_id']}-{$artwork['artwork_id']}'><img src='$imageUrl' alt='$description' style='max-width: 300px; max-height: 300px;'></a>";
-       //inspect_picture.php?id=$artistID-$artworkID
+        //inspect_picture.php?id=$artistID-$artworkID
         $getVisits = "SELECT visits FROM artworks WHERE artwork_id = {$artwork['artwork_id']}";
         $result = $conn->query($getVisits);
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $visits = $row["visits"];
-            echo "Number of visits for the artwork (Artwork ID: {$artwork['artwork_id']}): $visits<br>";
+            echo "</br>Number of visits for the artwork (Artwork ID: {$artwork['artwork_id']}): $visits<br>";
         }
        
        $sql = "SELECT users.username
@@ -64,6 +73,7 @@ if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         echo $row["username"] . "<br>";
     }
+    echo "<br/>";
 } else {
     echo "No users liked the picture (with Artwork ID: {$artwork['artwork_id']})<br> ";
 }
@@ -97,3 +107,5 @@ if ($result->num_rows > 0) {
 }
 
 ?>
+</body>
+</html>

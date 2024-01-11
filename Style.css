@@ -1,0 +1,107 @@
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: hotpink;
+            background-color: aquamarine; 
+            /* Samo trenutna boja bole me oci na belo promeni po volji */
+        }
+
+        header {
+            background-color: mediumpurple;
+            color: hotpink;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav {
+            background-color: mediumpurple;
+            overflow: hidden;
+
+        }
+
+        nav a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            color: hotpink;
+        }
+
+        nav a:hover {
+            background-color: mediumpurple;
+            color: purple;
+        }
+
+        .user-info {
+            float: right;
+            padding: 10px;
+            background-color: mediumpurple;
+            
+        }
+        .user-info p{
+            float: left;
+            margin: 0px;
+            margin-top:5px;
+            margin-right: 20px;
+        }
+        .user-info a{
+            color: hotpink;
+            text-decoration: none;
+            padding: 5px 10px;
+            border: 1px solid white;
+            border-radius: 5px;
+        }
+
+        .user-info a:hover {
+            background-color: mediumpurple;
+            color: purple;
+        }
+
+        .id1{
+            float:right;
+        }
+
+        .desno{
+            float:right;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        button, input, label, textarea {
+            background-color: white;
+            border: 1px solid hotpink;
+            color: hotpink;
+            border-radius: 8px;
+        }
+
+        input[type=file]::file-selector-button {
+            background-color: mistyrose;
+            color: hotpink;
+            border: 1px solid hotpink;
+            border-radius: 8px;
+        }
+
+        input[type=file]::file-selector-button:hover {
+            background-color: lavenderblush;
+
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        button:hover {
+            color: purple;
+        }
+
+        a:hover {
+            color: purple;
+        }
+
+        input[type=submit]:hover {
+            color: purple;
+        }

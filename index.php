@@ -11,23 +11,34 @@
             justify-content: center;
             height: 100vh;
             margin: 0;
+            background-color: aquamarine;
+            color: hotpink;
         }
 
         .container {
             text-align: center;
+            color: hotpink;
         }
 
         .login-form, .register-form, .guest-form {
             max-width: 400px;
             margin: auto;
-            padding: 20px;
-            border: 1px solid #ccc;
+            padding: 20px ;
+            border: 1px solid hotpink;
             border-radius: 8px;
+
             display: none; /* Hide all forms initially */
         }
 
         .login-form.active, .register-form.active, .guest-form.active {
             display: block; /* Show the active form */
+        }
+
+        button, input, form {
+            background-color: white;
+            color: hotpink;
+            border: 1px solid hotpink;
+            border-radius: 8px;
         }
     </style>
 </head>

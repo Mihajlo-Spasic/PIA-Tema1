@@ -4,6 +4,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Inspekcija</title>
+    <link rel="stylesheet" href="Style.css">
+    <style type="text/css">
+        a {
+            color: hotpink;
+            background-color: white;
+            border: 1px solid hotpink;
+            border-radius: 8px;
+        }
+    </style>
 </head>
 <body>
 <?php

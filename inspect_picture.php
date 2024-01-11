@@ -1,4 +1,43 @@
-<?php
+<<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <link rel="stylesheet" href="Style.css">
+    <style type="text/css">
+        a {
+            color: hotpink;
+            background-color: white;
+            text-decoration: none;
+            border: 1px solid hotpink;
+            border-radius: 8px;
+        }
+
+        body a:hover {
+            color: purple;
+
+        }
+
+        td {
+            font-size: 20px;
+            text-align: center;
+            align-items: center;
+            vertical-align: top;
+            background-color: white;
+            border: 1px solid hotpink;
+            border-radius: 8px;
+        }
+        button {
+            font-size: 20px;
+            vertical-align: top;
+            text-align: cetner;
+            align-items: center;
+        } 
+    </style>
+</head>
+<body>
+    <?php
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -73,7 +112,7 @@ $result = $conn->query($sql);
         $averageGrade = $numGrades > 0 ? $sumGrades / $numGrades : 0;
         echo "Average grade for the picture (Artwork ID: $artwork_id): " . round($averageGrade, 2) . "<br>";
     } else {
-        echo "No grades found for the picture with Artwork ID: $artwork_id";
+        echo "No grades (Artwork ID): $artwork_id </br>";
     }
 
 
@@ -86,7 +125,7 @@ $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $likeCount = $row["likeCount"];
-            echo "Total likes for the picture (Artwork ID: $artwork_id): $likeCount";
+            echo "likes(Artwork ID: $artwork_id): $likeCount </br>";
         } else {
             echo "No likes found for the picture with Artwork ID: $artwork_id";
         }
@@ -103,9 +142,7 @@ $result = $conn->query($sql);
                     $updateQuery = "INSERT INTO user_likes (user_id, artwork_id, grade) VALUES ({$_SESSION['user_id']}, $artwork_id, $newGrade) ON DUPLICATE KEY UPDATE grade = $newGrade";
                     $conn->query($updateQuery);
         
-                    echo "Grade updated successfully!";
                 } else {
-                    echo "Error: Please enter a valid numeric grade between 0 and 10.";
                 }
             }
         
@@ -142,15 +179,35 @@ $result = $conn->query($sql);
                 $updateLikeQuery = "INSERT INTO user_likes (user_id, artwork_id, liked) VALUES ({$_SESSION['user_id']}, $artwork_id, $newLikeStatus) ON DUPLICATE KEY UPDATE liked = $newLikeStatus";
                 $conn->query($updateLikeQuery);
     
-                echo "Like status updated successfully!";
+                
             } else {
                 echo "Error: " . $conn->error;
             }
         }
     ?>
-        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) . '?id=' . $artist_id . '-' . $artwork_id; ?>">            
-            <button type="submit" name="likeSubmit">Like</button>
-        </form>
+    <table>
+        <tr>
+            <td style="height:auto;">
+                <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) . '?id=' . $artist_id . '-' . $artwork_id; ?>">            
+                    <button style='border:none;'type="submit" name="likeSubmit">Like</button>
+                </form>
+            </td>
+            <td style="height:auto;">
+                <form  method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) . '?id=' . $artist_id . '-' . $artwork_id; ?>">            
+                    <button style='border:none;' strong type="submit" name="favoriteSubmit">Favorite</button>
+                 </form>
+            </td>
+            <td style="padding:2px; height:auto">
+              
+                    <a style='border:none;' href='#' target='_blank'>Share Inst</a>
+               
+            </td>
+            <td style="padding:2px; height:auto">
+                <a style='border:none;' href='https://twitter.com/intent/tweet?text=Check%20out%20this%20artwork:%20$title%20by%20$artistUsername' target='_blank'>Share X</a>
+            </td>
+        </tr>
+    </table>
+
     <?php
               $queryFavorite = "SELECT favorite FROM user_likes WHERE user_id = {$_SESSION['user_id']} AND artwork_id = $artwork_id";
               $resultFavorite = $conn->query($queryFavorite);
@@ -170,23 +227,17 @@ $result = $conn->query($sql);
                       $updateFavoriteQuery = "UPDATE user_likes SET favorite = $newFavoriteStatus WHERE user_id = {$_SESSION['user_id']} AND artwork_id = $artwork_id";
           
                       if ($conn->query($updateFavoriteQuery)) {
-                          echo "Favorite status updated successfully!";
                       } else {
-                          echo "Error updating favorite status: " . $conn->error;
                       }
                   } else {
                       $insertFavoriteQuery = "INSERT INTO user_likes (user_id, artwork_id, favorite) VALUES ({$_SESSION['user_id']}, $artwork_id, 1)";
 
                       if ($conn->query($insertFavoriteQuery)) {
                       } else {    
-                          echo "Error marking artwork as favorite: " . $conn->error;
                       }
                   }
               }
               ?>
-              <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) . '?id=' . $artist_id . '-' . $artwork_id; ?>">            
-                  <button type="submit" name="favoriteSubmit">Favorite</button>
-              </form>
           <?php
 
 
@@ -198,10 +249,10 @@ $result = $conn->query($sql);
 
 
 
-        echo "<div>";
-        echo "<a href='#' target='_blank'>Share Inst</a><br>";
-        echo "<a href='https://twitter.com/intent/tweet?text=Check%20out%20this%20artwork:%20$title%20by%20$artistUsername' target='_blank'>Share X</a>";
-        echo "</div>";
+        
+        //echo "<a href='#' target='_blank'>Share Inst   </a>";
+        //echo "<a href='https://twitter.com/intent/tweet?text=Check%20out%20this%20artwork:%20$title%20by%20$artistUsername' target='_blank'>Share X   </a>";
+        
         // x radi ,instagram ne who cares
      
 
@@ -209,7 +260,7 @@ $result = $conn->query($sql);
         if ($getAllComments) {
        
             if ($getAllComments->num_rows > 0) {
-                echo '<div style="border: 1px solid #ccc; padding: 10px; margin: 10px; border-radius: 5px;">';
+                echo '<div style="border: 1px solid hotpink; padding: 10px; margin: 10px; border-radius: 5px; background-color: white">';
                 
                 while ($comment = $getAllComments->fetch_assoc()) {
                  
@@ -237,33 +288,38 @@ $result = $conn->query($sql);
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && $_SESSION['username'] != "Guest" && $_SESSION['user_type'] == "user") {
+    if (isset($_POST['comment'])) { // Check if 'comment' is set in $_POST
+        $tableName = 'comments';  
 
-    $tableName = 'comments';  
+        $commentText = $_POST['comment'];
+        $user_id = $_SESSION['user_id'];
+        $comment_date = date("Y-m-d H:i:s");
 
-    $commentText = $_POST['commentText'];
-    $user_id = $_SESSION['user_id'];
-    $comment_date = date("Y-m-d H:i:s");
+        $insertQuery = "INSERT INTO $tableName (user_id, artwork_id, comment, comment_date) VALUES ('$user_id', '$artwork_id', '$commentText','$comment_date')";
+        $result = $conn->query($insertQuery);
 
-    $insertQuery = "INSERT INTO $tableName (user_id, artwork_id, comment, comment_date) VALUES ('$user_id', '$artwork_id', '$commentText','$comment_date')";
-    $result = $conn->query($insertQuery);
-
-    if ($result) {
-        echo '<p>Comment submitted successfully!</p>';
+        if ($result) {
+            echo '<p>Comment submitted successfully!</p>';
+        } else {
+            echo '<p>Error submitting comment: ' . $conn->error . '</p>';
+        }
     } else {
-        echo '<p>Error submitting comment: ' . $conn->error . '</p>';
+       echo "";
     }
-    
 }
+
 
 if ($_SESSION['username'] != "Guest"){
     if ($_SESSION['user_type'] == "user") {
         echo '
         <form method="post" action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '?id=' . $artist_id ."-". $artwork_id . '">
-        <label for="commentText">Comment:</label>
-            <textarea name="commentText" rows="4" cols="50" required></textarea><br>
+        <label for="comment">Comment:</label>
+        <textarea name="comment" rows="4" cols="50" required></textarea><br>
             
             <input type="submit" value="Submit Comment">
         </form>';
     }
 }
 ?>
+</body>
+</html>

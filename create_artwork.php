@@ -4,6 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hihi create artwork hehe </title>
+    <link rel="stylesheet" href="Style.css">
+    <style type="text/css">
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: aquamarine;
+            color: hotpink;
+        }
+    </style>
 </head>
 <body>
 
@@ -18,7 +30,9 @@ session_start();
 
 $db = "PIAproject";
 $table = "users";
-$conn = new mysqli("localhost","root","","piaproject") or exit("affaf");
+$conn = new mysqli("localhost","spale","Spale666","PIAproject") or exit("affaf");
+
+
 // promeni sa svojom databazom
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -38,13 +52,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
         echo '<img src="' . $uploadFile . '" alt="Uploaded Photo" style="max-width: 300px; max-height: 300px;"><br>';
 
-        echo '<strong>Date of Creation:</strong> ' . htmlspecialchars($_POST['creation_date']) . '<br>';
-        echo '<strong>Dimensions:</strong> ' . htmlspecialchars($_POST['dimensions']) . '<br>';
-        echo '<strong>Technique:</strong> ' . htmlspecialchars($_POST['technique']) . '<br>';
-        echo '<strong>Name:</strong> ' . htmlspecialchars($_POST['name']) . '<br>';
-        echo '<strong>Cost:</strong> ' . htmlspecialchars($_POST['cost']) . '<br>';
-        echo '<strong>On Sale:</strong> ' . (isset($_POST['on_sale']) ? 'Yes' : 'No') . '<br>';
-        echo '<strong>Bio:</strong> ' . htmlspecialchars($_POST['bio']) . '<br>';
+        // echo '<strong>Date of Creation:</strong>'. htmlspecialchars($_POST['creation_date']) . '<br>';
+        // echo '<strong>Dimensions:</strong> ' . htmlspecialchars($_POST['dimensions']) . '<br>';
+        // echo '<strong>Technique:</strong> ' . htmlspecialchars($_POST['technique']) . '<br>';
+        // echo '<strong>Name:</strong> ' . htmlspecialchars($_POST['name']) . '<br>';
+        // echo '<strong>Cost:</strong> ' . htmlspecialchars($_POST['cost']) . '<br>';
+        // echo '<strong>On Sale:</strong> ' . (isset($_POST['on_sale']) ? 'Yes' : 'No') . '<br>';
+        // echo '<strong>Bio:</strong> ' . htmlspecialchars($_POST['bio']) . '<br>';
         
         $date = $conn->real_escape_string($_POST['creation_date']);
         $dateObject = DateTime::createFromFormat('Y-m-d', $date);
